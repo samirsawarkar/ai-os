@@ -1,0 +1,161 @@
+# Git Ignore for AI OS Projects
+
+This `.gitignore` file is recommended for projects using AI OS framework.
+
+```gitignore
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+*.sublime-workspace
+.cursor/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.venv/
+venv/
+ENV/
+env/
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.eslintcache
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+*.postgres
+pgdata/
+
+# Logs
+logs/
+*.log
+
+# Temporary AI OS Session Files
+AIChat.*.md
+*_session_*.md
+
+# OS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Misc
+.cache/
+.tmp/
+
+# Keep these tracked
+!.env.example
+!.env.sample
+```
+
+## Usage
+
+Create this file in your project root:
+
+```bash
+curl https://raw.githubusercontent.com/yourusername/ai-os/main/.gitignore-template > .gitignore
+# or copy the content above
+```
+
+## Example Workflow
+
+```bash
+# Initialize git
+git init
+
+# Create .gitignore
+echo "[content above]" > .gitignore
+
+# Stage files (excluding .gitignore patterns)
+git add .
+
+# Initial commit
+git commit -m "Initial commit: AI OS framework setup"
+
+# Push to GitHub
+git remote add origin https://github.com/yourusername/my-project.git
+git push -u origin main
+```
+
+## Important: Track These Files
+
+Always track these for collaboration:
+- ✅ `CONTEXT.md` — project definition (shared)
+- ✅ `PROJECT_PLAN.md` — agent configuration (shared)
+- ✅ `STATE.md` — project state (shared)
+- ✅ `AGENTS.md` — framework (shared)
+- ✅ `COMMANDS.md` — commands reference (shared)
+- ✅ `RULES.md` — coding standards (shared)
+- ✅ `WORKFLOWS.md` — execution flows (shared)
+
+## Don't Track These
+
+Never commit:
+- ❌ `.env` — has secrets
+- ❌ `node_modules/` — large, regenerable
+- ❌ `__pycache__/` — compiled Python
+- ❌ `.venv/` — virtual environment
+- ❌ `.sqlite` databases — data files
+
+## Commit Examples
+
+```bash
+# Feature development
+git add backend/models.py backend/routes.py
+git commit -m "Phase 2: Implement user authentication"
+
+# Update state
+git add STATE.md
+git commit -m "Update: Completed auth implementation"
+
+# Bug fix
+git add backend/auth.py
+git commit -m "Fix: Handle expired JWT tokens properly"
+
+# Configuration
+git add CONTEXT.md
+git commit -m "Update: Add PostgreSQL to tech stack"
+
+# Deployment ready
+git add Dockerfile docker-compose.yml
+git commit -m "Deploy: Docker configuration for Railway"
+```
+
+---
+
+**Happy version control! 🎯**
