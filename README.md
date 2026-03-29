@@ -1,91 +1,229 @@
-# AI Development OS — Modular Agent System
+# AI OS — Execution Engine for Solo Developers
 
-A minimal, modular AI operating system for solo software development.
-15 specialized agents. Only the ones you need are active. Zero bloat.
+> A minimal, modular operating system for AI-assisted software development. 10 core agents. Auto-selected by project type. Zero bloat.
 
----
-
-## Quick Start
-
-### 1. Fill in your project
-Edit `CONTEXT.md` — project description, features, tech stack, constraints.
-
-### 2. Select your agents
-Edit `PROJECT_PLAN.md` Section 1 (toggle flags) and Section 3 (active agent list).
-
-### 3. Initialize STATE.md
-Update `STATE.md` with your actual Pending Components list.
-
-### 4. Start building
-Tell your AI assistant:
-> "Read PROJECT_PLAN.md, CONTEXT.md, and STATE.md.
->  Activate only the agents listed in Section 3.
->  Run /plan to start."
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen)
+![Agents](https://img.shields.io/badge/Agents-10%20Core-blue)
 
 ---
 
-## File Map
+## 🎯 What is AI OS?
 
-```
-ai-system/
-│
-├── CONTEXT.md          ✏️ YOU EDIT — project definition, goals, stack
-├── STATE.md            ✏️ YOU EDIT — live tracker (phase, tasks, decisions)
-│
-├── PROJECT_PLAN.md     ✏️ YOU EDIT Section 1 — agent activation engine
-├── AGENTS.md           🔒 FIXED — master coordinator, boot sequence
-├── COMMANDS.md         🔒 FIXED — /plan /build /review /debug /optimize
-├── RULES.md            🔒 FIXED — coding law, architecture rules
-├── WORKFLOWS.md        🔒 FIXED — 5 execution loops
-│
-└── agents/             🔒 FIXED — agent library (activate via PROJECT_PLAN.md)
-    ├── planner.md
-    ├── architect.md
-    ├── engineer.md
-    ├── reviewer.md
-    ├── debugger.md
-    ├── optimizer.md
-    ├── security.md
-    ├── database.md
-    ├── api-designer.md
-    ├── frontend.md
-    ├── backend.md
-    ├── devops.md
-    ├── tester.md
-    ├── performance.md
-    └── logger.md
+AI OS turns your AI assistant into a coordinated team of 10 specialized agents that execute sequentially, stay focused, and track progress automatically.
+
+**Result:** MVP-focused, production-ready development without chaos.
+
+---
+
+## ⚡ Quick Start (2 minutes)
+
+### 1. Clone
+```bash
+git clone https://github.com/samirsawarkar/ai-os.git
+cd ai-os
 ```
 
+### 2. Fill CONTEXT.md
+```markdown
+## Project Name
+TodoAPI
+
+## One-Line Description
+REST API with JWT auth and Postgres.
+
+## Features (MVP only)
+- User register/login
+- Create/read/delete todos
+- Persist to Postgres
+```
+
+### 3. Fill STATE.md
+```yaml
+Current Phase: 1. Foundation
+Current Focus: Database schema + user model
+Completed: []
+Pending:
+  - Database schema
+  - User model (register/login)
+  - Todo CRUD
+  - Review + Deploy
+```
+
+### 4. Open your AI editor and paste:
+```
+Read CONTEXT.md and STATE.md.
+
+You are AI OS. Follow execution engine in AGENTS.md:
+1. Read CONTEXT.md → project type
+2. Auto-select agents (10 core for REST API)
+3. Read STATE.md → current focus
+4. Route to responsible agent
+5. Execute
+
+/plan
+```
+
+That's it. Your AI is now a coordinated team.
+
 ---
 
-## Agent Selection by Project Type
+## 📂 File Structure
 
-| Project Type          | Activate These Agents                                                    |
-|-----------------------|--------------------------------------------------------------------------|
-| API only (no UI)      | planner, architect, engineer, reviewer, backend, database, api-designer, security, logger |
-| Full-stack web app    | All of the above + frontend, devops                                      |
-| CLI tool              | planner, engineer, reviewer, optimizer                                   |
-| Data pipeline         | planner, architect, engineer, reviewer, database, performance, logger    |
-| Auth-heavy app        | Add security (mandatory), tester (Phase 3+)                             |
-| Post-MVP optimization | Add optimizer, performance (never before MVP ships)                      |
-
----
-
-## Commands
-
-| Command              | Agents Used                          | When                        |
-|----------------------|--------------------------------------|-----------------------------|
-| `/plan [feature]`    | planner + architect                  | Start of phase or feature   |
-| `/build`             | engineer + layer agents              | Current Focus is defined    |
-| `/review`            | reviewer + security                  | After every build           |
-| `/debug [bug]`       | debugger + logger                    | Bug reported                |
-| `/optimize [target]` | optimizer + performance              | Post-MVP only               |
-| `/status`            | (reads files only)                   | Anytime                     |
+```
+ai-os/
+├── CONTEXT.md        ← Your project (FILL THIS)
+├── STATE.md          ← Progress tracker (UPDATE EACH SESSION)
+├── PROJECT_PLAN.md   ← Agent selection (AUTO-POPULATED)
+│
+├── AGENTS.md         ← 10 agents + execution engine
+├── COMMANDS.md       ← Command reference
+├── RULES.md          ← Architecture standards
+├── WORKFLOWS.md      ← Execution loops
+│
+└── agents/           ← 10 core agents
+    ├── planner, architect, engineer, reviewer
+    ├── debugger, optimizer, security, database
+    ├── backend, devops
+```
 
 ---
 
-## Core Principle
+## 🤖 How It Works
 
-> Activate the minimum agents needed.
-> Build the minimum features required.
-> Ship. Then improve.
+### Boot Sequence (Every Session)
+
+```
+1. Read CONTEXT.md → confirm project type
+2. Read STATE.md → confirm current phase + focus
+3. Auto-select agents → based on project type
+4. Route Current Focus → to responsible agent
+5. Agent executes → does the work
+6. Update STATE.md → next task
+```
+
+### 10 Core Agents
+
+| Agent | Job |
+|---|---|
+| **planner** | Sequence work, block scope creep |
+| **architect** | System design, tech stack |
+| **engineer** | Code implementation |
+| **reviewer** | Quality gates, approval |
+| **debugger** | Root cause analysis |
+| **optimizer** | Performance tuning |
+| **security** | Auth, validation, protection |
+| **database** | Schema, migrations |
+| **backend** | APIs, services, logic |
+| **devops** | Docker, deployment |
+
+### Auto-Selection by Project Type
+
+**REST API (Backend-heavy):**
+```
+✅ planner, architect, engineer, reviewer, backend, database, security, debugger, devops, optimizer
+```
+
+**Full-Stack Web:**
+```
+Same as REST API (remove optimizer until post-MVP)
+```
+
+**CLI Tool:**
+```
+planner, architect, engineer, reviewer, debugger, optimizer
+```
+
+**Data Pipeline:**
+```
+planner, architect, engineer, database, debugger, optimizer, devops
+```
+
+---
+
+## 📊 Execution Flow
+
+### /plan
+Planner sequences work into executable tasks.
+
+### /build
+Engineer implements current task.
+
+### /review
+Reviewer gates quality before merge.
+
+### /debug
+Debugger finds root cause, engineer fixes.
+
+### /optimize
+Optimizer tunes performance (post-MVP only).
+
+---
+
+## 🎓 Best Practices
+
+**✅ DO:**
+- Fill CONTEXT.md completely (source of truth)
+- Update STATE.md after each session
+- Use /review before merging code
+- Ship MVP first, optimize later
+- Let agents stay focused
+
+**❌ DON'T:**
+- Add scope without updating CONTEXT.md
+- Skip security reviews
+- Ignore CRITICAL issues from reviewer
+- Refactor before MVP ships
+- Activate unnecessary agents
+
+---
+
+## 📈 Example Timeline: REST API in 5 Days
+
+**Day 1:** architect + database design
+**Day 2-3:** backend (user model, todo CRUD)
+**Day 4:** reviewer + security audit
+**Day 5:** devops (Docker, Railway deploy)
+
+---
+
+## 🐛 Troubleshooting
+
+**"I don't know what to do next"**
+→ Check STATE.md: Current Focus field.
+
+**"AI is doing work I didn't ask for"**
+→ Update CONTEXT.md constraints/features.
+
+**"Lost work between sessions"**
+→ Update STATE.md before ending session.
+
+**"AI gave me broken code"**
+→ Run `/review [component]`.
+
+**"Need to fix a bug"**
+→ Run `/debug [bug]`.
+
+---
+
+## 📄 License
+
+MIT License — use freely, commercially, modify as needed.
+
+---
+
+## 🚀 Next Steps
+
+1. Clone this repo
+2. Fill CONTEXT.md with your project
+3. Fill STATE.md with your first phase
+4. Open Cursor, ChatGPT, or Claude
+5. Paste the boot sequence
+6. Run `/plan`
+7. Build your MVP
+
+**That's it. Go build.** 🎯
+
+---
+
+*Built for solo developers who want speed, clarity, and quality. Inspired by Unix philosophy: do one thing well.*
