@@ -3,533 +3,597 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI OS — Turn AI Into an Execution Engine</title>
-    <meta name="description" content="A modular agent system that turns AI into a structured execution engine for building software. Not chat. Not suggestions. A system that plans → builds → reviews → ships.">
+    <title>AI OS — Complete Technical Guide</title>
+    <meta name="description" content="Complete technical documentation for AI OS. Flow charts, system architecture, VS Code/Cursor integration guide.">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { font-family: 'Inter', sans-serif; }
-        .hero-gradient { background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); }
-        .accent-blue { color: #2563eb; }
-        .btn-primary { background-color: #2563eb; transition: all 0.2s; }
-        .btn-primary:hover { background-color: #1d4ed8; transform: translateY(-2px); box-shadow: 0 12px 24px rgba(37, 99, 235, 0.2); }
-        .btn-secondary { border-color: #e2e8f0; transition: all 0.2s; }
-        .btn-secondary:hover { background-color: #f8fafc; }
-        .code-block { background-color: #0f172a; color: #e2e8f0; border-radius: 8px; overflow-x: auto; }
-        .flow-step { opacity: 0; animation: slideIn 0.6s ease-out forwards; }
-        .flow-step:nth-child(1) { animation-delay: 0s; }
-        .flow-step:nth-child(2) { animation-delay: 0.3s; }
-        .flow-step:nth-child(3) { animation-delay: 0.6s; }
-        .flow-step:nth-child(4) { animation-delay: 0.9s; }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .command-demo { background-color: #0f172a; color: #10b981; border-radius: 8px; padding: 1rem; font-family: 'Monaco', monospace; overflow-x: auto; }
-        .cmd { color: #60a5fa; font-weight: 600; }
-        .output { color: #e2e8f0; margin-top: 0.5rem; }
-        .agent-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-        .arrow { color: #64748b; font-size: 1.5rem; }
+        code, pre, .code-block { font-family: 'JetBrains Mono', monospace; }
+        .hero { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; }
+        .accent-blue { color: #3b82f6; }
+        .diagram-container { background: white; border: 2px solid #e2e8f0; border-radius: 8px; padding: 20px; overflow-x: auto; }
+        .code-block { background-color: #0f172a; color: #e2e8f0; border-radius: 8px; overflow-x: auto; padding: 1rem; font-size: 0.875rem; line-height: 1.5; }
+        .file-tree { background: #0f172a; color: #e2e8f0; padding: 1rem; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 0.875rem; }
+        .workflow-box { background: #f0f9ff; border-left: 4px solid #3b82f6; padding: 1rem; margin: 1rem 0; border-radius: 4px; }
+        .integration-step { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 1rem; margin: 1rem 0; border-radius: 4px; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab-button { padding: 0.5rem 1rem; background: #e2e8f0; border: none; cursor: pointer; border-radius: 4px 4px 0 0; margin-right: 0.5rem; font-weight: 600; }
+        .tab-button.active { background: #3b82f6; color: white; }
+        .mermaid { display: flex; justify-content: center; }
     </style>
 </head>
 <body class="bg-white text-slate-900">
 
     <!-- NAVIGATION -->
-    <nav class="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-slate-100 z-50">
+    <nav class="bg-slate-900 text-white sticky top-0 z-50 border-b border-slate-700">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-            <div class="text-2xl font-bold accent-blue">AI OS</div>
-            <div class="space-x-6 hidden md:flex text-sm">
-                <a href="#how" class="hover:accent-blue transition">How it works</a>
-                <a href="#features" class="hover:accent-blue transition">Features</a>
-                <a href="#code" class="hover:accent-blue transition">See it in action</a>
+            <div class="text-xl font-bold">AI OS — Technical Guide</div>
+            <div class="space-x-6 text-sm hidden md:flex">
+                <a href="#architecture" class="hover:text-blue-400 transition">Architecture</a>
+                <a href="#setup" class="hover:text-blue-400 transition">Setup</a>
+                <a href="#execution" class="hover:text-blue-400 transition">Execution</a>
+                <a href="#integration" class="hover:text-blue-400 transition">VS Code/Cursor</a>
             </div>
-            <a href="https://github.com/samirsawarkar/ai-os" target="_blank" class="text-sm font-medium hover:accent-blue transition">
-                GitHub ↗
-            </a>
         </div>
     </nav>
 
-    <!-- HERO (Dynamic) -->
-    <section class="hero-gradient pt-40 pb-20 px-4 sm:px-6">
-        <div class="max-w-4xl mx-auto text-center">
-            <h1 class="text-6xl sm:text-7xl font-bold leading-tight mb-6">
-                Turn AI Into an<br>
-                <span class="accent-blue">Execution Engine</span>
-            </h1>
-            <p class="text-xl text-slate-600 mb-4 max-w-2xl mx-auto font-semibold">
-                Not chat. Not suggestions.<br>
-                A system that <span class="accent-blue">plans → builds → reviews → ships</span>.
-            </p>
-            <p class="text-lg text-slate-500 mb-8 max-w-2xl mx-auto">
-                From idea → working product in days
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-                <a href="#flow" class="btn-primary px-8 py-3 rounded-lg text-white font-semibold inline-flex items-center justify-center gap-2">
-                    🎬 Live Demo
-                </a>
-                <a href="#commands" class="btn-secondary px-8 py-3 rounded-lg font-semibold border-2 inline-flex items-center justify-center gap-2 hover:bg-slate-50">
-                    ⚡ Get Started
-                </a>
-            </div>
-            <p class="text-sm text-slate-500">Open source. MIT licensed. ~500KB. No config.</p>
-        </div>
-    </section>
-
-    <!-- BEFORE/AFTER COMPARISON -->
-    <section class="py-20 px-4 sm:px-6 bg-slate-50">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-4xl font-bold mb-12 text-center">Without AI OS vs With AI OS</h2>
-            
-            <div class="grid md:grid-cols-2 gap-8">
-                <!-- WITHOUT -->
-                <div class="bg-white border-2 border-red-200 rounded-lg p-8">
-                    <h3 class="font-bold text-lg mb-6 text-red-600">❌ Without AI OS</h3>
-                    <div class="space-y-4 text-sm text-slate-600">
-                        <div class="flex gap-3">
-                            <div class="text-red-500">✗</div>
-                            <div>AI forgets everything between sessions</div>
-                        </div>
-                        <div class="flex gap-3">
-                            <div class="text-red-500">✗</div>
-                            <div>You copy/paste context repeatedly</div>
-                        </div>
-                        <div class="flex gap-3">
-                            <div class="text-red-500">✗</div>
-                            <div>Scope explodes ("Just add this feature")</div>
-                        </div>
-                        <div class="flex gap-3">
-                            <div class="text-red-500">✗</div>
-                            <div>Code breaks in production</div>
-                        </div>
-                        <div class="flex gap-3">
-                            <div class="text-red-500">✗</div>
-                            <div>No quality gates before shipping</div>
-                        </div>
-                        <div class="flex gap-3">
-                            <div class="text-red-500">✗</div>
-                            <div>Takes weeks for simple projects</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- WITH -->
-                <div class="bg-white border-2 border-green-200 rounded-lg p-8">
-                    <h3 class="font-bold text-lg mb-6 text-green-600">✅ With AI OS</h3>
-                    <div class="space-y-4 text-sm text-slate-600">
-                        <div class="flex gap-3">
-                            <div class="text-green-500">✓</div>
-                            <div>Context locked in CONTEXT.md</div>
-                        </div>
-                        <div class="flex gap-3">
-                            <div class="text-green-500">✓</div>
-                            <div>State tracked in STATE.md</div>
-                        </div>
-                        <div class="flex gap-3">
-                            <div class="text-green-500">✓</div>
-                            <div>Scope enforcement (no creep)</div>
-                        </div>
-                        <div class="flex gap-3">
-                            <div class="text-green-500">✓</div>
-                            <div>Quality gates prevent bad code</div>
-                        </div>
-                        <div class="flex gap-3">
-                            <div class="text-green-500">✓</div>
-                            <div>Security reviewed automatically</div>
-                        </div>
-                        <div class="flex gap-3">
-                            <div class="text-green-500">✓</div>
-                            <div>Ship MVP in 5 days (REST API)</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- LIVE FLOW (The Most Important Section) -->
-    <section id="flow" class="py-20 px-4 sm:px-6 bg-gradient-to-b from-white to-slate-50">
+    <!-- HERO -->
+    <section class="hero py-20 px-4 sm:px-6">
         <div class="max-w-5xl mx-auto">
-            <h2 class="text-4xl font-bold mb-4 text-center">How It Actually Works</h2>
-            <p class="text-lg text-slate-600 text-center mb-16 max-w-2xl mx-auto">
-                The system in motion. Watch how AI OS transforms your input into working code.
-            </p>
-            
-            <!-- Full Flow Visualization -->
-            <div class="space-y-8">
-                
-                <!-- INPUT PHASE -->
-                <div class="flow-step">
-                    <div class="bg-white border-2 border-blue-200 rounded-lg p-8">
-                        <h3 class="font-bold text-lg accent-blue mb-6">📥 INPUT</h3>
-                        <p class="text-slate-600 mb-4 font-medium">You define:</p>
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div class="bg-slate-50 p-4 rounded border border-slate-200">
-                                <div class="font-mono font-semibold text-sm text-slate-700">CONTEXT.md</div>
-                                <div class="text-xs text-slate-600 mt-2">What you're building</div>
-                                <div class="text-xs text-slate-500 mt-3">Project scope, tech stack, constraints</div>
-                            </div>
-                            <div class="bg-slate-50 p-4 rounded border border-slate-200">
-                                <div class="font-mono font-semibold text-sm text-slate-700">STATE.md</div>
-                                <div class="text-xs text-slate-600 mt-2">Where you are</div>
-                                <div class="text-xs text-slate-500 mt-3">Current phase, focus, completed work</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ARROW -->
-                <div class="flex justify-center">
-                    <div class="text-4xl text-slate-300">↓</div>
-                </div>
-
-                <!-- SYSTEM PHASE -->
-                <div class="flow-step">
-                    <div class="bg-white border-2 border-slate-300 rounded-lg p-8">
-                        <h3 class="font-bold text-lg mb-6">⚙️ SYSTEM</h3>
-                        <p class="text-slate-600 mb-6 font-medium">AI OS runs your agents in sequence:</p>
-                        
-                        <div class="space-y-3">
-                            <div class="flex items-center gap-4 p-4 bg-slate-50 rounded border border-slate-200 agent-pulse">
-                                <div class="text-2xl">📋</div>
-                                <div>
-                                    <div class="font-semibold text-slate-700">Planner</div>
-                                    <div class="text-xs text-slate-600">Sequences tasks into steps</div>
-                                </div>
-                                <div class="ml-auto text-slate-400">→</div>
-                            </div>
-                            
-                            <div class="flex items-center gap-4 p-4 bg-slate-50 rounded border border-slate-200" style="animation-delay: 0.3s;" class="agent-pulse">
-                                <div class="text-2xl">⚡</div>
-                                <div>
-                                    <div class="font-semibold text-slate-700">Engineer</div>
-                                    <div class="text-xs text-slate-600">Builds feature for current task</div>
-                                </div>
-                                <div class="ml-auto text-slate-400">→</div>
-                            </div>
-                            
-                            <div class="flex items-center gap-4 p-4 bg-slate-50 rounded border border-slate-200" style="animation-delay: 0.6s;" class="agent-pulse">
-                                <div class="text-2xl">✅</div>
-                                <div>
-                                    <div class="font-semibold text-slate-700">Reviewer</div>
-                                    <div class="text-xs text-slate-600">Validates code (6-point gate)</div>
-                                </div>
-                                <div class="ml-auto text-slate-400">→</div>
-                            </div>
-                            
-                            <div class="flex items-center gap-4 p-4 bg-slate-50 rounded border border-slate-200" style="animation-delay: 0.9s;" class="agent-pulse">
-                                <div class="text-2xl">🔍</div>
-                                <div>
-                                    <div class="font-semibold text-slate-700">Debugger</div>
-                                    <div class="text-xs text-slate-600">Fixes issues (on-demand)</div>
-                                </div>
-                                <div class="ml-auto text-slate-400">→</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ARROW -->
-                <div class="flex justify-center">
-                    <div class="text-4xl text-slate-300">↓</div>
-                </div>
-
-                <!-- OUTPUT PHASE -->
-                <div class="flow-step">
-                    <div class="bg-white border-2 border-green-200 rounded-lg p-8">
-                        <h3 class="font-bold text-lg text-green-600 mb-6">📤 OUTPUT</h3>
-                        <div class="bg-green-50 p-6 rounded border-2 border-green-200">
-                            <div class="text-center">
-                                <div class="text-4xl mb-2">✓</div>
-                                <div class="font-bold text-lg text-green-700">Working Feature Shipped</div>
-                                <div class="text-sm text-green-600 mt-2">No context loss. No chaos. No overengineering.</div>
-                                <div class="text-xs text-green-600 mt-3">STATE.md updated. Ready for next task.</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- Key Point -->
-            <div class="mt-16 bg-blue-50 border-2 border-blue-200 rounded-lg p-8 text-center">
-                <p class="text-slate-700 font-semibold">🎯 Every execution cycle is the same</p>
-                <p class="text-slate-600 text-sm mt-2">Plan → Build → Review → Repeat. No surprises. No manual context management. Just controlled execution.</p>
+            <h1 class="text-5xl font-bold mb-4">AI OS</h1>
+            <p class="text-xl text-slate-300 mb-2">A structured multi-agent system for AI-assisted software development</p>
+            <p class="text-slate-400 text-sm mb-8">Technical documentation • Flow charts • System architecture • Integration guide</p>
+            <div class="flex gap-4">
+                <a href="#architecture" class="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded font-semibold transition">Learn Architecture</a>
+                <a href="https://github.com/samirsawarkar/ai-os" target="_blank" class="bg-slate-700 hover:bg-slate-600 px-6 py-2 rounded font-semibold transition">GitHub Repo</a>
             </div>
         </div>
     </section>
 
-    <!-- INTERACTIVE COMMAND FLOW -->
-    <section id="commands" class="py-20 px-4 sm:px-6 bg-slate-900 text-white">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-4xl font-bold mb-4 text-center">Commands (System in Motion)</h2>
-            <p class="text-lg text-slate-300 text-center mb-12 max-w-2xl mx-auto">
-                Each command = controlled execution. Watch agents switch roles automatically.
-            </p>
-            
-            <div class="space-y-6">
-                <!-- /plan command -->
-                <div class="bg-slate-800 rounded-lg p-6 border border-slate-700">
-                    <div class="font-mono font-bold text-green-400 mb-4">$ /plan</div>
-                    <div class="text-sm text-slate-300 space-y-2 mb-4">
-                        <div>→ <span class="text-slate-400">Planner agent active</span></div>
-                        <div>→ <span class="text-slate-400">Breaking feature into steps</span></div>
-                        <div>→ <span class="text-slate-400">Assigning to engineers</span></div>
-                    </div>
-                    <div class="bg-slate-900 p-3 rounded font-mono text-xs text-slate-400">
-                        <div><span class="text-green-400">✓</span> Phase 1: Setup database</div>
-                        <div><span class="text-green-400">✓</span> Phase 2: Build user model</div>
-                        <div><span class="text-green-400">✓</span> Phase 3: Implement routes</div>
-                        <div><span class="text-green-400">✓</span> Phase 4: Security review</div>
-                    </div>
-                </div>
-
-                <!-- /build command -->
-                <div class="bg-slate-800 rounded-lg p-6 border border-slate-700">
-                    <div class="font-mono font-bold text-green-400 mb-4">$ /build</div>
-                    <div class="text-sm text-slate-300 space-y-2 mb-4">
-                        <div>→ <span class="text-slate-400">Engineer agent active</span></div>
-                        <div>→ <span class="text-slate-400">Reading STATE.md (current focus)</span></div>
-                        <div>→ <span class="text-slate-400">Implementing "Build user model"</span></div>
-                    </div>
-                    <div class="bg-slate-900 p-3 rounded font-mono text-xs text-slate-400">
-                        <div><span class="text-blue-400">models/user.py</span> created</div>
-                        <div><span class="text-blue-400">migrations/001_users.sql</span> created</div>
-                        <div><span class="text-blue-400">schemas/user.py</span> created</div>
-                    </div>
-                </div>
-
-                <!-- /review command -->
-                <div class="bg-slate-800 rounded-lg p-6 border border-slate-700">
-                    <div class="font-mono font-bold text-green-400 mb-4">$ /review</div>
-                    <div class="text-sm text-slate-300 space-y-2 mb-4">
-                        <div>→ <span class="text-slate-400">Reviewer + Security agents active</span></div>
-                        <div>→ <span class="text-slate-400">Running 6-point quality gate</span></div>
-                        <div>→ <span class="text-slate-400">Checking security + logic</span></div>
-                    </div>
-                    <div class="bg-slate-900 p-3 rounded font-mono text-xs text-slate-400">
-                        <div><span class="text-green-400">✓ Minimal</span> - no unnecessary code</div>
-                        <div><span class="text-green-400">✓ Correct</span> - logic verified</div>
-                        <div><span class="text-green-400">✓ Necessary</span> - all features implemented</div>
-                        <div><span class="text-green-400">✓ Scalable</span> - queries optimized</div>
-                        <div><span class="text-green-400">✓ Compliant</span> - security audit passed</div>
-                        <div><span class="text-green-400">✓ Simple</span> - easy to maintain</div>
-                        <div></div>
-                        <div><span class="text-green-400">PASS</span> - Ready to merge</div>
-                    </div>
-                </div>
-
-                <!-- /debug command -->
-                <div class="bg-slate-800 rounded-lg p-6 border border-slate-700">
-                    <div class="font-mono font-bold text-green-400 mb-4">$ /debug "users not saving to database"</div>
-                    <div class="text-sm text-slate-300 space-y-2 mb-4">
-                        <div>→ <span class="text-slate-400">Debugger agent active</span></div>
-                        <div>→ <span class="text-slate-400">Isolating root cause</span></div>
-                        <div>→ <span class="text-slate-400">Engineer fixing issue</span></div>
-                    </div>
-                    <div class="bg-slate-900 p-3 rounded font-mono text-xs text-slate-400">
-                        <div><span class="text-yellow-400">Found:</span> Missing .commit() in create_user()</div>
-                        <div><span class="text-green-400">Fixed:</span> Added session.commit()</div>
-                        <div><span class="text-green-400">Verified:</span> All tests passing</div>
-                    </div>
-                </div>
+    <!-- 1. REPOSITORY STRUCTURE -->
+    <section class="py-16 px-4 sm:px-6 bg-slate-50">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-3xl font-bold mb-6">1. Repository Structure</h2>
+            <div class="file-tree">
+ai-os/
+├── CONTEXT.md              # Project definition (scope)
+├── STATE.md                # Live execution state
+├── PROJECT_PLAN.md         # Agent activation
+├── AGENTS.md               # 11-step boot sequence
+├── MEMORY.md               # Decision history
+├── VERSION.md              # Evolution tracking
+├── EXECUTION_RULES.md      # Quality gates
+├── WORKFLOWS.md            # 5 execution loops
+├── COMMANDS.md             # Command reference
+├── RULES.md                # Code standards
+│
+├── agents/                 # 10 specialized agents
+│   ├── planner.md
+│   ├── architect.md
+│   ├── engineer.md
+│   ├── reviewer.md
+│   ├── debugger.md
+│   ├── optimizer.md
+│   ├── security.md
+│   ├── database.md
+│   ├── backend.md
+│   └── devops.md
+│
+└── docs/index.html         # This page
             </div>
-
-            <!-- Key insight -->
-            <div class="mt-12 bg-blue-900 border-2 border-blue-400 rounded-lg p-6 text-center">
-                <p class="text-slate-200 font-semibold">🎯 Each command = Agents switch roles automatically</p>
-                <p class="text-slate-400 text-sm mt-2">You control the system with simple commands. Agents handle execution.</p>
+            <div class="mt-6 bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+                <p class="text-sm"><span class="font-bold">23 files, ~500KB.</span> All markdown. Zero dependencies. Portable to any AI.</p>
             </div>
         </div>
     </section>
 
-    <!-- SYSTEM ARCHITECTURE -->
-    <section class="py-20 px-4 sm:px-6 bg-slate-50">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-4xl font-bold mb-12 text-center">System Architecture</h2>
+    <!-- 2. SYSTEM ARCHITECTURE -->
+    <section id="architecture" class="py-16 px-4 sm:px-6">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-3xl font-bold mb-8">2. System Architecture</h2>
             
-            <div class="bg-white border-2 border-slate-200 rounded-lg p-8 font-mono text-sm text-slate-700">
-                <div class="flex items-center gap-2 mb-6">
-                    <div class="text-slate-400">CONTEXT.md</div>
-                    <div class="text-slate-300">→ defines scope</div>
-                </div>
-                <div class="flex items-center gap-2 mb-6 pl-4">
-                    <div class="text-slate-400">STATE.md</div>
-                    <div class="text-slate-300">→ controls execution</div>
-                </div>
-                
-                <div class="text-slate-300 mb-6">↓</div>
-                
-                <div class="flex items-center gap-2 mb-6 bg-blue-50 border-2 border-blue-200 p-4 rounded">
-                    <div class="text-blue-600 font-bold">AGENTS.md</div>
-                    <div class="text-blue-600">execution engine</div>
-                </div>
-                
-                <div class="text-slate-300 mb-6">↓</div>
-                
-                <div class="grid md:grid-cols-4 gap-2 mb-6">
-                    <div class="bg-slate-100 p-3 rounded text-center">
-                        <div class="font-bold text-slate-700">📋</div>
-                        <div class="text-xs text-slate-600 mt-1">Planner</div>
+            <!-- Data Flow -->
+            <div class="mb-12">
+                <h3 class="text-xl font-bold mb-4">Data Flow Diagram</h3>
+                <div class="diagram-container">
+                    <div class="mermaid">
+graph LR
+    A["📥 INPUT<br/>CONTEXT.md<br/>STATE.md"] -->|Boot Sequence| B["⚙️ LOAD<br/>AGENTS.md<br/>11 Steps"]
+    B -->|Route Task| C["👥 EXECUTE<br/>10 Agents<br/>Workflows"]
+    C -->|Output| D["📤 CODE<br/>Update<br/>STATE.md"]
+    D -->|Next Cycle| A
                     </div>
-                    <div class="bg-slate-100 p-3 rounded text-center">
-                        <div class="font-bold text-slate-700">⚡</div>
-                        <div class="text-xs text-slate-600 mt-1">Engineer</div>
-                    </div>
-                    <div class="bg-slate-100 p-3 rounded text-center">
-                        <div class="font-bold text-slate-700">✅</div>
-                        <div class="text-xs text-slate-600 mt-1">Reviewer</div>
-                    </div>
-                    <div class="bg-slate-100 p-3 rounded text-center">
-                        <div class="font-bold text-slate-700">🔍</div>
-                        <div class="text-xs text-slate-600 mt-1">Debugger</div>
-                    </div>
-                </div>
-                
-                <div class="text-slate-300 mb-6">↓</div>
-                
-                <div class="flex items-center gap-2 bg-green-50 border-2 border-green-200 p-4 rounded">
-                    <div class="text-green-600 font-bold">WORKFLOWS.md</div>
-                    <div class="text-green-600">ensures order</div>
-                </div>
-                
-                <div class="text-slate-300 mt-6 mb-6">↓</div>
-                
-                <div class="flex items-center gap-2 bg-green-100 border-2 border-green-400 p-4 rounded">
-                    <div class="text-green-700 font-bold">✓ OUTPUT</div>
-                    <div class="text-green-700">production-ready code</div>
                 </div>
             </div>
 
-            <div class="mt-8 bg-blue-50 border-2 border-blue-200 rounded-lg p-6 text-center">
-                <p class="text-slate-700 font-semibold">🎯 This is what makes it feel "real"</p>
-                <p class="text-slate-600 text-sm mt-2">You're not talking to an AI. You're running a system.</p>
+            <!-- File Relationships -->
+            <div class="mb-12">
+                <h3 class="text-xl font-bold mb-4">File Dependency Graph</h3>
+                <div class="diagram-container">
+                    <div class="mermaid">
+graph TB
+    A["CONTEXT.md<br/>(Scope)"] --> D["AGENTS.md<br/>(Boot)"]
+    B["STATE.md<br/>(State)"] --> D
+    C["MEMORY.md<br/>(Decisions)"] --> D
+    D --> E["WORKFLOWS.md<br/>(Execution)"]
+    D --> F["10 Agents<br/>(Implementation)"]
+    E --> G["CODE OUTPUT"]
+    F --> G
+    G -->|Updates| B
+                    </div>
+                </div>
             </div>
-        </div>
-    </section>
 
-    <!-- TIMELINE (Sharp Version) -->
-    <section class="py-20 px-4 sm:px-6">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-4xl font-bold mb-12 text-center">Build an API in 5 Days</h2>
-            
-            <div class="space-y-3">
-                <div class="bg-gradient-to-r from-blue-50 to-transparent border-l-4 border-blue-500 p-4 rounded">
-                    <div class="font-bold text-slate-900">Day 1: Structure</div>
-                    <div class="text-sm text-slate-600">Database design + migrations → Planner + Database agents</div>
-                </div>
-                
-                <div class="bg-gradient-to-r from-blue-50 to-transparent border-l-4 border-blue-500 p-4 rounded">
-                    <div class="font-bold text-slate-900">Day 2: Core Logic</div>
-                    <div class="text-sm text-slate-600">User model + register/login → Engineer agent</div>
-                </div>
-                
-                <div class="bg-gradient-to-r from-blue-50 to-transparent border-l-4 border-blue-500 p-4 rounded">
-                    <div class="font-bold text-slate-900">Day 3: Features</div>
-                    <div class="text-sm text-slate-600">CRUD endpoints + business logic → Engineer + Backend agents</div>
-                </div>
-                
-                <div class="bg-gradient-to-r from-green-50 to-transparent border-l-4 border-green-500 p-4 rounded">
-                    <div class="font-bold text-slate-900">Day 4: Hardening</div>
-                    <div class="text-sm text-slate-600">Security audit + logging + quality gates → Reviewer + Security agents</div>
-                </div>
-                
-                <div class="bg-gradient-to-r from-green-50 to-transparent border-l-4 border-green-500 p-4 rounded">
-                    <div class="font-bold text-slate-900">Day 5: Live</div>
-                    <div class="text-sm text-slate-600">Docker + Railway deployment → DevOps agent</div>
-                </div>
-
-                <div class="mt-8 bg-green-100 border-2 border-green-500 rounded-lg p-4 text-center">
-                    <div class="font-bold text-green-700">✓ Working API deployed</div>
-                    <div class="text-sm text-green-600">No drift. No rework. Just execution.</div>
+            <!-- Boot Sequence -->
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded">
+                <h3 class="text-lg font-bold mb-4">Boot Sequence (11 Steps)</h3>
+                <div class="code-block">
+1. Read PROJECT_PLAN.md → Identify project type
+2. Read STATE.md → Understand current phase + focus
+3. Read CONTEXT.md → Confirm scope (prevent creep)
+4. Read MEMORY.md → Apply past decisions
+5. Read VERSION.md → Check project maturity
+6. Load AGENTS.md → Activate correct agents
+7. Select workflow → Match project type
+8. Initialize state → Begin execution
+9. Execute task → /plan, /build, /review, /debug
+10. Update STATE.md → Mark completed, next focus
+11. Update MEMORY.md + VERSION.md → Mandatory final step
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- STAT HIGHLIGHTS -->
-    <section class="py-20 px-4 sm:px-6 bg-gradient-to-r from-blue-50 to-slate-50">
-        <div class="max-w-4xl mx-auto">
-            <div class="grid md:grid-cols-3 gap-8 text-center">
+    <!-- 3. CORE CONCEPTS -->
+    <section id="setup" class="py-16 px-4 sm:px-6 bg-slate-50">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-3xl font-bold mb-8">3. Core Concepts & Files</h2>
+            
+            <!-- CONTEXT.md -->
+            <div class="mb-10">
+                <h3 class="text-lg font-bold mb-3 accent-blue">📋 CONTEXT.md (Project Definition)</h3>
+                <div class="workflow-box">
+                    <p class="font-semibold mb-2">Purpose:</p>
+                    <p class="text-sm">Single source of truth. AI reads every session. Prevents scope creep.</p>
+                </div>
+                <div class="code-block">
+## Project Name
+TodoAPI
+
+## Description
+REST API with JWT auth, PostgreSQL
+
+## Features (MVP - FIXED)
+- User registration + login
+- Create/read/delete todos
+- Deploy to Railway
+
+## Tech Stack
+FastAPI, PostgreSQL, JWT, Railway
+
+## Constraints
+- Solo developer
+- MVP in 5 days
+- $0 spend
+                </div>
+            </div>
+
+            <!-- STATE.md -->
+            <div class="mb-10">
+                <h3 class="text-lg font-bold mb-3 accent-blue">📊 STATE.md (Live Execution State)</h3>
+                <div class="workflow-box">
+                    <p class="font-semibold mb-2">Purpose:</p>
+                    <p class="text-sm">Updated EVERY agent action. Tracks phase, focus, completed work. Essential for continuity.</p>
+                </div>
+                <div class="code-block">
+## Current Phase
+Foundation (DB + Auth)
+
+## Current Focus
+Implement User model + migrations
+
+## Task Priority
+HIGH
+
+## Completed
+✅ Project setup
+✅ DB connection
+
+## Pending
+- User model + migrations
+- Register/login endpoints
+- Security review
+
+## Known Issues
+None
+                </div>
+            </div>
+
+            <!-- AGENTS.md -->
+            <div class="mb-10">
+                <h3 class="text-lg font-bold mb-3 accent-blue">🤖 AGENTS.md (Boot & Routing)</h3>
+                <div class="workflow-box">
+                    <p class="font-semibold mb-2">Purpose:</p>
+                    <p class="text-sm">Master orchestrator. Defines boot sequence and task routing.</p>
+                </div>
+                <div class="code-block">
+AGENT ROUTING TABLE:
+
+Command    Agent(s)         Purpose
+/plan      planner          Break feature into tasks
+/build     engineer         Implement current task
+/review    reviewer +       Quality gate (6-point)
+           security
+/debug     debugger +       Find root cause + fix
+           engineer
+                </div>
+            </div>
+
+            <!-- EXECUTION_RULES.md -->
+            <div class="mb-10">
+                <h3 class="text-lg font-bold mb-3 accent-blue">✅ EXECUTION_RULES.md (Quality Discipline)</h3>
+                <div class="workflow-box">
+                    <p class="font-semibold mb-2">Purpose:</p>
+                    <p class="text-sm">Enforces quality. No task completes without PASS verdict.</p>
+                </div>
+                <div class="code-block">
+6-POINT QUALITY GATE (ALL MUST PASS):
+
+✓ Minimal       - No unnecessary code
+✓ Correct       - Logic verified + tested
+✓ Necessary     - All features from CONTEXT.md
+✓ Scalable      - Performance acceptable
+✓ Compliant     - Security + auth passed
+✓ Simple        - Easy to maintain
+
+RESULT: PASS (merge) or BLOCKED (fix + retry)
+                </div>
+            </div>
+
+            <!-- MEMORY.md + VERSION.md -->
+            <div class="grid md:grid-cols-2 gap-6 mb-10">
                 <div>
-                    <div class="text-6xl font-bold accent-blue mb-2">10</div>
-                    <p class="text-slate-600 font-semibold">Specialized Agents</p>
-                    <p class="text-xs text-slate-500 mt-1">One job each</p>
+                    <h3 class="text-lg font-bold mb-3 accent-blue">🧠 MEMORY.md</h3>
+                    <div class="workflow-box">
+                        <p class="text-sm mb-2"><span class="font-semibold">Tracks:</span> Decisions, patterns, mistakes, constraints</p>
+                        <p class="text-sm"><span class="font-semibold">Updates:</span> After every session (mandatory step 11)</p>
+                    </div>
                 </div>
                 <div>
-                    <div class="text-6xl font-bold accent-blue mb-2">5</div>
-                    <p class="text-slate-600 font-semibold">Days to MVP</p>
-                    <p class="text-xs text-slate-500 mt-1">REST API example</p>
-                </div>
-                <div>
-                    <div class="text-6xl font-bold accent-blue mb-2">0</div>
-                    <p class="text-slate-600 font-semibold">Setup Required</p>
-                    <p class="text-xs text-slate-500 mt-1">All markdown files</p>
+                    <h3 class="text-lg font-bold mb-3 accent-blue">📌 VERSION.md</h3>
+                    <div class="workflow-box">
+                        <p class="text-sm mb-2"><span class="font-semibold">Tracks:</span> Evolution (v0.1.0 → v1.0.0)</p>
+                        <p class="text-sm"><span class="font-semibold">Updates:</span> When logic changes (mandatory step 11)</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FINAL CTA -->
-    <section class="py-20 px-4 sm:px-6 bg-slate-900 text-white">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-5xl font-bold mb-4">Stop Waiting on AI</h2>
-            <p class="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
-                Build your MVP with <span class="font-semibold">structure, discipline, and speed</span>.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-                <a href="https://github.com/samirsawarkar/ai-os" target="_blank" class="btn-primary px-8 py-3 rounded-lg text-white font-semibold inline-flex items-center justify-center gap-2">
-                    ⭐ Star on GitHub
-                </a>
-                <a href="https://github.com/samirsawarkar/ai-os#quick-start-5-minutes" target="_blank" class="bg-slate-800 hover:bg-slate-700 px-8 py-3 rounded-lg font-semibold inline-flex items-center justify-center gap-2 transition">
-                    📖 Full Docs
-                </a>
+    <!-- 4. EXECUTION FLOW -->
+    <section id="execution" class="py-16 px-4 sm:px-6">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-3xl font-bold mb-8">4. Execution Flow & Workflows</h2>
+
+            <!-- Sequence Diagram -->
+            <div class="mb-12">
+                <h3 class="text-lg font-bold mb-4">Command Execution Sequence</h3>
+                <div class="diagram-container">
+                    <div class="mermaid">
+sequenceDiagram
+    participant User
+    participant AI as AI Assistant
+    participant Agents
+    participant Files
+
+    User->>AI: /plan
+    AI->>Files: Read STATE.md
+    Files-->>AI: Return current phase
+    AI->>Agents: Activate Planner
+    Agents->>AI: Return task sequence
+    AI-->>User: Display plan
+
+    User->>AI: /build
+    AI->>Files: Read STATE.md (Current Focus)
+    Files-->>AI: Return task
+    AI->>Agents: Activate Engineer
+    Agents->>AI: Generate code
+    AI-->>User: Code output
+    
+    User->>AI: /review
+    AI->>Agents: Activate Reviewer + Security
+    Agents->>AI: Run 6-point quality gate
+    AI-->>User: PASS or BLOCKED
+    
+    alt PASS
+        User->>AI: Continue
+    else BLOCKED
+        User->>AI: /debug [issue]
+    end
+                    </div>
+                </div>
             </div>
-            <p class="text-slate-400 text-sm">
-                5 minutes to get started. Works with Claude, ChatGPT, Cursor, Copilot.<br>
-                MIT Licensed. Open source. No dependencies.
-            </p>
+
+            <!-- Agent State Machine -->
+            <div class="mb-12">
+                <h3 class="text-lg font-bold mb-4">Agent Lifecycle State Machine</h3>
+                <div class="diagram-container">
+                    <div class="mermaid">
+stateDiagram-v2
+    [*] --> ReadConfig: Boot sequence starts
+    ReadConfig --> LoadAgents: Read CONTEXT + STATE
+    LoadAgents --> Execute: Agents activated
+    Execute --> Review: Task completed
+    Review --> UpdateState: Quality gate PASS
+    UpdateState --> [*]: STATE.md updated
+    
+    Review --> Blocked: Quality gate BLOCKED
+    Blocked --> Debug: Issue identified
+    Debug --> Execute: Fix applied + retry
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5-Point Workflow -->
+            <div class="mb-12">
+                <h3 class="text-lg font-bold mb-4">5 Core Workflows</h3>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+                        <div class="font-bold">1. Feature Development</div>
+                        <div class="text-sm text-slate-600 mt-2">Plan → Build → Review → Merge → Update STATE</div>
+                    </div>
+                    <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded">
+                        <div class="font-bold">2. Bug Fixing</div>
+                        <div class="text-sm text-slate-600 mt-2">Debug → Fix → Review → Merge → Update STATE</div>
+                    </div>
+                    <div class="bg-purple-50 border-l-4 border-purple-500 p-4 rounded">
+                        <div class="font-bold">3. System Design</div>
+                        <div class="text-sm text-slate-600 mt-2">Architecture → Tech Decisions → Schema → Setup</div>
+                    </div>
+                    <div class="bg-orange-50 border-l-4 border-orange-500 p-4 rounded">
+                        <div class="font-bold">4. Code Review</div>
+                        <div class="text-sm text-slate-600 mt-2">Quality Gates → Security → Approval</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example Workflow -->
+            <div class="bg-slate-900 text-white p-6 rounded">
+                <h3 class="text-lg font-bold mb-4">Example: Create Todo Endpoint</h3>
+                <div class="space-y-3 text-sm font-mono">
+                    <div><span class="text-green-400">→</span> /plan "todo endpoints"</div>
+                    <div class="text-slate-400 ml-4">Planner: [ DB migration | Model | Route | Test | Deploy ]</div>
+                    
+                    <div><span class="text-green-400">→</span> /build</div>
+                    <div class="text-slate-400 ml-4">Engineer reads STATE (focus: DB migration)</div>
+                    <div class="text-slate-400 ml-4">Engineer creates: migrations/002_todos.sql</div>
+                    
+                    <div><span class="text-green-400">→</span> /review</div>
+                    <div class="text-slate-400 ml-4">Reviewer checks: ✓ Minimal ✓ Correct ✓ Necessary</div>
+                    <div class="text-slate-400 ml-4">Result: PASS</div>
+                    
+                    <div><span class="text-green-400">→</span> STATE.md updated</div>
+                    <div class="text-slate-400 ml-4">Current Focus → Model (next task)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. VS CODE / CURSOR INTEGRATION -->
+    <section id="integration" class="py-16 px-4 sm:px-6 bg-slate-50">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-3xl font-bold mb-8">5. Integration: VS Code & Cursor</h2>
+
+            <!-- Tab Buttons -->
+            <div class="flex border-b border-slate-300 mb-6">
+                <button class="tab-button active" onclick="switchTab('cursor')">🐭 Cursor (Best)</button>
+                <button class="tab-button" onclick="switchTab('vscode')">⚙️ VS Code</button>
+                <button class="tab-button" onclick="switchTab('claude')">💬 Claude</button>
+            </div>
+
+            <!-- CURSOR Tab -->
+            <div id="cursor" class="tab-content active">
+                <h3 class="text-lg font-bold mb-4">Cursor: Optimal Integration</h3>
+                <div class="integration-step">
+                    <p class="font-bold mb-2">Why Cursor:</p>
+                    <ul class="text-sm space-y-1">
+                        <li>✓ @workspace context (@CONTEXT.md @STATE.md)</li>
+                        <li>✓ Chat persists in project folder</li>
+                        <li>✓ Creates/edits files directly</li>
+                        <li>✓ Terminal integration</li>
+                        <li>✓ Best for AI OS workflows</li>
+                    </ul>
+                </div>
+
+                <h4 class="font-bold mt-6 mb-3">Setup (5 Minutes):</h4>
+                <div class="code-block">
+# 1. Clone AI OS
+git clone https://github.com/samirsawarkar/ai-os .
+
+# 2. Open Cursor
+cursor .
+
+# 3. Create new chat (Cmd+L)
+
+# 4. Paste:
+@workspace
+
+Read @CONTEXT.md and @STATE.md
+
+Follow boot sequence from @AGENTS.md
+
+Then execute: /plan
+                </div>
+
+                <h4 class="font-bold mt-6 mb-3">Workflow (Ongoing):</h4>
+                <div class="space-y-2">
+                    <div class="bg-white border border-slate-300 p-3 rounded">
+                        <div class="font-mono text-sm">@workspace /plan "feature name"</div>
+                    </div>
+                    <div class="bg-white border border-slate-300 p-3 rounded">
+                        <div class="font-mono text-sm">@workspace /build</div>
+                    </div>
+                    <div class="bg-white border border-slate-300 p-3 rounded">
+                        <div class="font-mono text-sm">@workspace /review</div>
+                    </div>
+                    <div class="bg-white border border-slate-300 p-3 rounded">
+                        <div class="font-mono text-sm">@workspace /debug "bug description"</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VS CODE Tab -->
+            <div id="vscode" class="tab-content">
+                <h3 class="text-lg font-bold mb-4">VS Code + Copilot</h3>
+                <div class="integration-step">
+                    <p class="font-bold mb-2">Setup:</p>
+                    <ul class="text-sm space-y-1">
+                        <li>1. Install GitHub Copilot Chat extension</li>
+                        <li>2. Clone AI OS files into your project</li>
+                        <li>3. Open Copilot Chat (Cmd+Shift+I)</li>
+                    </ul>
+                </div>
+
+                <h4 class="font-bold mt-6 mb-3">Command Format:</h4>
+                <div class="code-block">
+@workspace
+
+Read @CONTEXT.md and @STATE.md
+
+Boot sequence from @AGENTS.md:
+1. Read all config files
+2. Activate agents
+3. Execute /plan
+
+Start with /plan
+                </div>
+
+                <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 mt-4 rounded">
+                    <p class="text-sm"><span class="font-bold">Note:</span> VS Code has less context than Cursor. May need to paste AGENTS.md manually.</p>
+                </div>
+            </div>
+
+            <!-- CLAUDE Tab -->
+            <div id="claude" class="tab-content">
+                <h3 class="text-lg font-bold mb-4">Claude Web (No Editor)</h3>
+                <div class="integration-step">
+                    <p class="font-bold mb-2">Setup:</p>
+                    <ul class="text-sm space-y-1">
+                        <li>1. Go to claude.ai</li>
+                        <li>2. Create new conversation</li>
+                        <li>3. Paste your project files</li>
+                    </ul>
+                </div>
+
+                <h4 class="font-bold mt-6 mb-3">Initial Message:</h4>
+                <div class="code-block">
+I am using AI OS framework.
+
+Here is my project setup:
+
+[PASTE CONTEXT.md]
+[PASTE STATE.md]
+[PASTE AGENTS.md]
+
+Follow boot sequence and run: /plan
+                </div>
+
+                <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 mt-4 rounded">
+                    <p class="text-sm"><span class="font-bold">Workflow:</span> Copy output → Paste to STATE.md → Save locally → Paste in next chat</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. COMPLETE EXAMPLE -->
+    <section class="py-16 px-4 sm:px-6">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-3xl font-bold mb-8">6. Complete Example: REST API (5 Days)</h2>
+
+            <div class="diagram-container mb-8">
+                <div class="mermaid">
+gantt
+    title REST API Development Timeline
+    
+    section Day 1
+    Setup & DB :d1, 0, 1d
+    
+    section Day 2-3
+    Auth & Core :d2, 1d, 2d
+    
+    section Day 4
+    Hardening :d4, 3d, 1d
+    
+    section Day 5
+    Deploy :d5, 4d, 1d
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded">
+                    <h3 class="font-bold">Day 1: Foundation</h3>
+                    <div class="text-sm text-slate-700 mt-2">Agents: planner, architect, database</div>
+                    <div class="text-sm text-slate-600">Tasks: Schema → DB setup → Migrations</div>
+                </div>
+
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded">
+                    <h3 class="font-bold">Day 2-3: Core Features</h3>
+                    <div class="text-sm text-slate-700 mt-2">Agents: engineer, backend, api-designer</div>
+                    <div class="text-sm text-slate-600">Tasks: User model → Auth → Todo CRUD</div>
+                </div>
+
+                <div class="bg-green-50 border-l-4 border-green-500 p-6 rounded">
+                    <h3 class="font-bold">Day 4: Hardening</h3>
+                    <div class="text-sm text-slate-700 mt-2">Agents: reviewer, security, logger</div>
+                    <div class="text-sm text-slate-600">Tasks: Security audit → Logging → Error handling</div>
+                </div>
+
+                <div class="bg-green-50 border-l-4 border-green-500 p-6 rounded">
+                    <h3 class="font-bold">Day 5: Deploy</h3>
+                    <div class="text-sm text-slate-700 mt-2">Agents: devops</div>
+                    <div class="text-sm text-slate-600">Tasks: Docker → ENV → Railway deploy</div>
+                    <div class="text-sm font-bold text-green-700 mt-2">✓ Live API</div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="bg-slate-950 text-slate-400 text-sm py-12 px-4 sm:px-6">
-        <div class="max-w-6xl mx-auto">
-            <div class="grid md:grid-cols-4 gap-8 mb-12">
+    <section class="bg-slate-900 text-slate-300 py-12 px-4 sm:px-6">
+        <div class="max-w-5xl mx-auto text-sm">
+            <p class="mb-6">AI OS is a technical framework for structured AI-assisted development. Not a product. Educational documentation.</p>
+            <div class="grid md:grid-cols-3 gap-8">
                 <div>
-                    <div class="text-slate-200 font-semibold mb-4">AI OS</div>
-                    <p class="text-xs">A modular agent system for AI-assisted solo development.</p>
+                    <div class="text-white font-bold mb-2">Repository</div>
+                    <a href="https://github.com/samirsawarkar/ai-os" target="_blank" class="hover:text-blue-400 transition">GitHub</a>
                 </div>
                 <div>
-                    <div class="text-slate-200 font-semibold mb-4">Product</div>
-                    <ul class="space-y-2 text-xs">
-                        <li><a href="https://github.com/samirsawarkar/ai-os" target="_blank" class="hover:text-white transition">GitHub</a></li>
-                        <li><a href="https://github.com/samirsawarkar/ai-os#quick-start-5-minutes" target="_blank" class="hover:text-white transition">Documentation</a></li>
-                        <li><a href="https://github.com/samirsawarkar/ai-os/blob/main/LICENSE" target="_blank" class="hover:text-white transition">License (MIT)</a></li>
-                    </ul>
+                    <div class="text-white font-bold mb-2">Files</div>
+                    <div>23 markdown files</div>
+                    <div>~500KB total</div>
                 </div>
                 <div>
-                    <div class="text-slate-200 font-semibold mb-4">Use Cases</div>
-                    <ul class="space-y-2 text-xs">
-                        <li>REST APIs</li>
-                        <li>Full-stack apps</li>
-                        <li>CLI tools</li>
-                        <li>Data pipelines</li>
-                    </ul>
+                    <div class="text-white font-bold mb-2">License</div>
+                    <div>MIT (Open Source)</div>
                 </div>
-                <div>
-                    <div class="text-slate-200 font-semibold mb-4">Built For</div>
-                    <ul class="space-y-2 text-xs">
-                        <li>Solo developers</li>
-                        <li>Indie hackers</li>
-                        <li>Fast MVPs</li>
-                        <li>Small teams</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="border-t border-slate-800 pt-8 text-xs text-center">
-                <p>Created by solo developers, for solo developers.</p>
-                <p class="mt-2">Inspired by Unix philosophy: do one thing well. 🚀</p>
             </div>
         </div>
-    </footer>
+    </section>
+
+    <script>
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(el => el.classList.remove('active'));
+            document.getElementById(tab).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+        mermaid.contentLoaded();
+    </script>
 
 </body>
 </html>
