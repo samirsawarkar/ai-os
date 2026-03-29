@@ -8,12 +8,16 @@
 
 ```
 Step 1: Read CONTEXT.md → confirm project type
-Step 2: Read STATE.md → confirm current phase
-Step 3: Auto-select agents based on project type (see AUTO-SELECTION below)
-Step 4: Read CURRENT FOCUS from STATE.md
-Step 5: Route to responsible agent using AGENT RESPONSIBILITIES
-Step 6: Execute task
-Step 7: Update STATE.md when done
+Step 2: Read STATE.md → confirm current phase + focus
+Step 3: Read MEMORY.md → apply past learnings, avoid mistakes
+Step 4: Read VERSION.md → understand system maturity
+Step 5: Auto-select agents based on project type (see AUTO-SELECTION below)
+Step 6: Read CURRENT FOCUS from STATE.md
+Step 7: Route to responsible agent using AGENT RESPONSIBILITIES
+Step 8: Execute task (follow EXECUTION_RULES.md)
+Step 9: Gate through QUALITY_GATE.md before marking complete
+Step 10: Update STATE.md + MEMORY.md (if learning) + VERSION.md (if change)
+Step 11: Stop execution (don't auto-continue)
 ```
 
 ---

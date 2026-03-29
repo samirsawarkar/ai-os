@@ -328,3 +328,48 @@ START
   ▼
 END → Repeat for next measurable problem
 ```
+
+---
+
+## FINAL STEP — Completion & State Preservation (MANDATORY)
+
+**Every task ends with this step. No exceptions.**
+
+```
+AFTER EVERY TASK COMPLETION:
+
+[1] Update STATE.md
+    ├── Move completed component to Completed list
+    ├── Set Current Focus to next Pending item (or leave blank if phase done)
+    ├── Log any decisions in Decisions section
+    └── Log any blockers in Known Issues section
+
+[2] Update MEMORY.md (IF new learning)
+    ├── Extract decision
+    ├── Extract pattern
+    ├── Extract mistake (if any)
+    ├── Add constraint learned
+    └── Leave as-is if no new learning
+
+[3] Update VERSION.md (IF significant change)
+    ├── If major new capability → Minor version bump
+    ├── If bug fix or small change → Patch bump
+    ├── If new agent/workflow → Minor bump
+    └── Add entry to Version History
+
+[4] STOP execution
+    ├── Do NOT auto-start next task
+    ├── Do NOT chain commands
+    ├── Session ends here
+    └── Human confirms before next /plan
+
+RESULT:
+  ✓ STATE.md is current and actionable
+  ✓ MEMORY.md captures learnings
+  ✓ VERSION.md tracks evolution
+  ✓ System is ready for next session
+  ✓ No work is lost
+  ✓ Decisions are documented
+```
+
+**This is the law. Follow it religiously.**
