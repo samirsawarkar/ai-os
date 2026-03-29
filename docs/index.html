@@ -59,10 +59,11 @@
             <h2 class="text-3xl font-bold mb-6">1. Repository Structure</h2>
             <div class="file-tree">
 ai-os/
-├── CONTEXT.md              # Project definition (scope)
+├── CONTEXT.md              # Project definition (scope + SCOPE LOCK)
 ├── STATE.md                # Live execution state
-├── PROJECT_PLAN.md         # Agent activation
-├── AGENTS.md               # 11-step boot sequence
+├── PROJECT_PLAN.md         # Feature sequence
+├── AGENTS.md               # 6-step boot + authority hierarchy
+├── START_SESSION_PROMPT.md # Session initialization
 ├── MEMORY.md               # Decision history
 ├── VERSION.md              # Evolution tracking
 ├── EXECUTION_RULES.md      # Quality gates
@@ -70,17 +71,17 @@ ai-os/
 ├── COMMANDS.md             # Command reference
 ├── RULES.md                # Code standards
 │
-├── agents/                 # 10 specialized agents
-│   ├── planner.md
-│   ├── architect.md
-│   ├── engineer.md
-│   ├── reviewer.md
-│   ├── debugger.md
-│   ├── optimizer.md
-│   ├── security.md
-│   ├── database.md
-│   ├── backend.md
-│   └── devops.md
+├── agents/                 # 10 core agents (standardized)
+│   ├── planner.md          # Break tasks into sequence
+│   ├── architect.md        # System design + tech decisions
+│   ├── engineer.md         # Code implementation
+│   ├── reviewer.md         # Quality gates (6-point)
+│   ├── debugger.md         # Bug root cause + fix
+│   ├── optimizer.md        # Performance tuning (post-MVP)
+│   ├── security.md         # Auth + data protection
+│   ├── database.md         # Schema + migrations + queries
+│   ├── backend.md          # Business logic + services
+│   └── devops.md           # Docker + deployment
 │
 └── docs/index.html         # This page
             </div>
@@ -101,8 +102,8 @@ ai-os/
                 <div class="diagram-container">
                     <div class="mermaid">
 graph LR
-    A["📥 INPUT<br/>CONTEXT.md<br/>STATE.md"] -->|Boot Sequence| B["⚙️ LOAD<br/>AGENTS.md<br/>11 Steps"]
-    B -->|Route Task| C["👥 EXECUTE<br/>10 Agents<br/>Workflows"]
+    A["📥 INPUT<br/>CONTEXT.md<br/>STATE.md<br/>PROJECT_PLAN.md"] -->|6-Step Boot| B["⚙️ LOAD<br/>Authority Hierarchy<br/>Agent Selection"]
+    B -->|Route Task| C["👥 EXECUTE<br/>10 Agents<br/>Standardized Output"]
     C -->|Output| D["📤 CODE<br/>Update<br/>STATE.md"]
     D -->|Next Cycle| A
                     </div>
@@ -115,11 +116,11 @@ graph LR
                 <div class="diagram-container">
                     <div class="mermaid">
 graph TB
-    A["CONTEXT.md<br/>(Scope)"] --> D["AGENTS.md<br/>(Boot)"]
-    B["STATE.md<br/>(State)"] --> D
-    C["MEMORY.md<br/>(Decisions)"] --> D
+    A["CONTEXT.md<br/>(Scope Lock)"] --> D["AGENTS.md<br/>(Boot + Authority)"]
+    B["STATE.md<br/>(Current Focus)"] --> D
+    C["START_SESSION_PROMPT.md<br/>(Init)"] --> D
     D --> E["WORKFLOWS.md<br/>(Execution)"]
-    D --> F["10 Agents<br/>(Implementation)"]
+    D --> F["10 Agents<br/>(Standardized)"]
     E --> G["CODE OUTPUT"]
     F --> G
     G -->|Updates| B
@@ -129,19 +130,29 @@ graph TB
 
             <!-- Boot Sequence -->
             <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded">
-                <h3 class="text-lg font-bold mb-4">Boot Sequence (11 Steps)</h3>
+                <h3 class="text-lg font-bold mb-4">Boot Sequence (6 Steps) + Authority Hierarchy</h3>
                 <div class="code-block">
-1. Read PROJECT_PLAN.md → Identify project type
-2. Read STATE.md → Understand current phase + focus
-3. Read CONTEXT.md → Confirm scope (prevent creep)
-4. Read MEMORY.md → Apply past decisions
-5. Read VERSION.md → Check project maturity
-6. Load AGENTS.md → Activate correct agents
-7. Select workflow → Match project type
-8. Initialize state → Begin execution
-9. Execute task → /plan, /build, /review, /debug
-10. Update STATE.md → Mark completed, next focus
-11. Update MEMORY.md + VERSION.md → Mandatory final step
+BOOT SEQUENCE (Every Session):
+1. Read CONTEXT.md (project definition + scope lock)
+2. Read STATE.md (current phase + current focus)
+3. Read PROJECT_PLAN.md (if exists)
+4. Select active agents (auto-select based on task)
+5. Confirm Current Focus (from STATE.md)
+6. Execute ONLY current task
+
+AUTHORITY HIERARCHY (Conflict Resolution):
+1. CONTEXT.md → absolute authority (scope boundaries)
+2. STATE.md → current focus overrides suggestions
+3. planner → controls scope + sequence
+4. reviewer → can BLOCK with CRITICAL issues
+5. security → can BLOCK unsafe implementations
+6. engineer → executes only approved tasks
+7. optimizer → lowest priority (post-MVP only)
+
+Hard Rules:
+• Inactive agents = zero authority
+• Agents cannot override higher layer decisions
+• If conflict → follow hierarchy strictly
                 </div>
             </div>
         </div>
@@ -154,12 +165,17 @@ graph TB
             
             <!-- CONTEXT.md -->
             <div class="mb-10">
-                <h3 class="text-lg font-bold mb-3 accent-blue">📋 CONTEXT.md (Project Definition)</h3>
+                <h3 class="text-lg font-bold mb-3 accent-blue">📋 CONTEXT.md (Project Definition + Scope Lock)</h3>
                 <div class="workflow-box">
                     <p class="font-semibold mb-2">Purpose:</p>
-                    <p class="text-sm">Single source of truth. AI reads every session. Prevents scope creep.</p>
+                    <p class="text-sm">Single source of truth. SCOPE LOCK prevents creep. AI reads every session. Mandatory enforcement.</p>
                 </div>
                 <div class="code-block">
+## SCOPE LOCK (MANDATORY)
+* This file defines what gets built.
+* If a request is not in CONTEXT.md, it does NOT get built.
+* Agents cannot expand scope without explicit user approval.
+
 ## Project Name
 TodoAPI
 
@@ -214,21 +230,30 @@ None
 
             <!-- AGENTS.md -->
             <div class="mb-10">
-                <h3 class="text-lg font-bold mb-3 accent-blue">🤖 AGENTS.md (Boot & Routing)</h3>
+                <h3 class="text-lg font-bold mb-3 accent-blue">🤖 AGENTS.md (Execution Engine & Routing)</h3>
                 <div class="workflow-box">
                     <p class="font-semibold mb-2">Purpose:</p>
-                    <p class="text-sm">Master orchestrator. Defines boot sequence and task routing.</p>
+                    <p class="text-sm">Master execution engine. 6-step boot sequence + 7-level authority hierarchy for conflict resolution.</p>
                 </div>
                 <div class="code-block">
-AGENT ROUTING TABLE:
+EXECUTION ENGINE:
 
-Command    Agent(s)         Purpose
-/plan      planner          Break feature into tasks
-/build     engineer         Implement current task
-/review    reviewer +       Quality gate (6-point)
-           security
-/debug     debugger +       Find root cause + fix
-           engineer
+Boot: 6 steps (CONTEXT → STATE → PROJECT_PLAN → Auto-select → Confirm Focus → Execute)
+
+Authority Hierarchy (Conflict Resolution):
+  1. CONTEXT.md (scope authority - absolute)
+  2. STATE.md (current focus - overrides suggestions)
+  3. planner (scope + sequence)
+  4. reviewer (BLOCK on CRITICAL issues)
+  5. security (BLOCK on unsafe code)
+  6. engineer (execute only approved tasks)
+  7. optimizer (lowest priority, post-MVP only)
+
+Auto-Activation:
+  /plan   → planner
+  /build  → engineer + domain agents
+  /review → reviewer + security
+  /debug  → debugger
                 </div>
             </div>
 
@@ -250,6 +275,29 @@ Command    Agent(s)         Purpose
 ✓ Simple        - Easy to maintain
 
 RESULT: PASS (merge) or BLOCKED (fix + retry)
+                </div>
+            </div>
+
+            <!-- START_SESSION_PROMPT.md -->
+            <div class="mb-10">
+                <h3 class="text-lg font-bold mb-3 accent-blue">🚀 START_SESSION_PROMPT.md (Session Boot)</h3>
+                <div class="workflow-box">
+                    <p class="font-semibold mb-2">Purpose:</p>
+                    <p class="text-sm">Session initialization. Copy → paste into AI chat to boot system every time.</p>
+                </div>
+                <div class="code-block">
+Boot AI-OS.
+
+1. Read /CONTEXT.md (project definition)
+2. Read /STATE.md (current focus)
+3. Read /PROJECT_PLAN.md (if exists)
+
+Confirm:
+- Project: [name from CONTEXT]
+- Current Focus: [from STATE.md]
+- Active Agents: [auto-selected]
+
+Ready. What's next?
                 </div>
             </div>
 
