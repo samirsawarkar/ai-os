@@ -12,6 +12,33 @@ Phase sequence: Foundation → Auth → Core Features → Hardening → Launch �
 
 ---
 
+## Current Focus (What to work on RIGHT NOW)
+```
+(leave blank until /plan defines it)
+```
+
+---
+
+## Task Priority (System focuses HIGH first)
+```
+HIGH:
+  - Database setup (blocker for everything)
+  - Auth system (blocker for features)
+  - Security review (before launch)
+
+MEDIUM:
+  - Core features
+  - API routes
+  - Error handling
+
+LOW:
+  - Optimization
+  - Nice-to-have polish
+  - Documentation (post-MVP)
+```
+
+---
+
 ## Active Agents (sync with PROJECT_PLAN.md Section 3)
 ```
 planner, architect, engineer, reviewer, backend, database,

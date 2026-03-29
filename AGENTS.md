@@ -15,10 +15,19 @@ Step 5: Auto-select agents based on project type (see AUTO-SELECTION below)
 Step 6: Read CURRENT FOCUS from STATE.md
 Step 7: Route to responsible agent using AGENT RESPONSIBILITIES
 Step 8: Execute task (follow EXECUTION_RULES.md)
-Step 9: Gate through QUALITY_GATE.md before marking complete
-Step 10: Update STATE.md + MEMORY.md (if learning) + VERSION.md (if change)
-Step 11: Stop execution (don't auto-continue)
+Step 9: Gate through EXECUTION_RULES (all 6 gates must PASS)
+Step 10: HARD REQUIREMENT — Task is NOT complete until:
+         ✓ Implemented
+         ✓ Reviewed
+         ✓ STATE.md updated (mandatory)
+         ✓ MEMORY.md updated (if new learning)
+         ✓ VERSION.md updated (if significant change)
+Step 11: Stop execution (don't auto-continue, wait for /plan)
 ```
+
+**HARD RULE:** If STATE.md is not updated, task is INCOMPLETE.
+**HARD RULE:** If MEMORY.md is not updated after learning, next session repeats mistakes.
+**HARD RULE:** If VERSION.md is not updated, evolution is lost.
 
 ---
 
@@ -96,10 +105,17 @@ Use REST API agents (no optimizer until post-MVP)
 - Verification
 
 ### optimizer
-- Performance profiling
-- Bottleneck detection
-- Improvement suggestions
-- Before/after comparison
+- Performance profiling (ONLY post-MVP)
+- Bottleneck detection (ONLY post-MVP)
+- Improvement suggestions (ONLY post-MVP)
+- Before/after comparison (ONLY post-MVP)
+
+**HARD GUARD:** Optimizer can ONLY run if:
+  ✓ Current Phase ≥ Testing (post-MVP stage)
+  ✓ MVP is shipped and working
+  ✓ Specific bottleneck is measured
+  
+If attempted before: system blocks with "NOT READY FOR OPTIMIZATION"
 
 ### security
 - Auth implementation
