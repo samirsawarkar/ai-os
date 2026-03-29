@@ -1,4 +1,14 @@
 # CONTEXT.md — Project Definition
+
+## SCOPE LOCK (MANDATORY)
+
+* This file defines what gets built.
+* If a request is not in this CONTEXT.md, it does NOT get built.
+* Agents cannot expand scope without explicit user approval.
+* Post-MVP features must be explicitly marked as non-goals.
+
+---
+
 # ✏️ FILL THIS IN ONCE. Do not edit during active development.
 # This file is the source of truth for product decisions.
 

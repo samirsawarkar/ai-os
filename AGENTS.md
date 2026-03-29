@@ -1,50 +1,95 @@
-# AGENTS.md — Master Coordinator
+# AI-OS EXECUTION ENGINE
 
-> 10 core agents. Auto-selected based on project type. No manual toggles.
+## BOOT SEQUENCE (MANDATORY)
 
----
+1. Read CONTEXT.md
+2. Read STATE.md
+3. Read PROJECT_PLAN.md (if exists)
+4. Select active agents (auto)
+5. Confirm Current Focus
+6. Execute ONLY current task
 
-## BOOT SEQUENCE (MANDATORY — EVERY SESSION)
-
-```
-Step 1: Read CONTEXT.md → confirm project type
-Step 2: Read STATE.md → confirm current phase + focus
-Step 3: Read MEMORY.md → apply past learnings, avoid mistakes
-Step 4: Read VERSION.md → understand system maturity
-Step 5: Auto-select agents based on project type (see AUTO-SELECTION below)
-Step 6: Read CURRENT FOCUS from STATE.md
-Step 7: Route to responsible agent using AGENT RESPONSIBILITIES
-Step 8: Execute task (follow EXECUTION_RULES.md)
-Step 9: Gate through EXECUTION_RULES (all 6 gates must PASS)
-Step 10: HARD REQUIREMENT — Task is NOT complete until:
-         ✓ Implemented
-         ✓ Reviewed
-         ✓ STATE.md updated (mandatory)
-         ✓ MEMORY.md updated (if new learning)
-         ✓ VERSION.md updated (if significant change)
-Step 11: Stop execution (don't auto-continue, wait for /plan)
-```
-
-**HARD RULE:** If STATE.md is not updated, task is INCOMPLETE.
-**HARD RULE:** If MEMORY.md is not updated after learning, next session repeats mistakes.
-**HARD RULE:** If VERSION.md is not updated, evolution is lost.
+If Current Focus is empty → run /plan
 
 ---
 
-## AGENT REGISTRY (10 CORE)
+## AUTHORITY HIERARCHY (CONFLICT RESOLUTION)
 
-| ID          | Layer          | Responsibility | File              |
-|-------------|----------------|---|-------------------|
-| `planner`   | Strategy       | Task sequencing, phase management | agents/planner.md |
-| `architect` | Design         | System design, tech decisions | agents/architect.md |
-| `engineer`  | Implementation | Code implementation, refactoring | agents/engineer.md |
-| `reviewer`  | Quality        | Code review, logic errors, approval gates | agents/reviewer.md |
-| `debugger`  | Repair         | Bug root cause, error tracing | agents/debugger.md |
-| `optimizer` | Refinement     | Performance tuning, bottleneck fixes | agents/optimizer.md |
-| `security`  | Quality        | Auth, input validation, data protection | agents/security.md |
-| `database`  | Implementation | Schema, migrations, queries | agents/database.md |
-| `backend`   | Implementation | Business logic, API routes, services | agents/backend.md |
-| `devops`    | Operations     | Docker, deployment, infrastructure | agents/devops.md |
+When agents conflict:
+
+1. CONTEXT.md → absolute authority (scope)
+2. STATE.md → current focus overrides all suggestions
+3. planner → controls scope + sequence
+4. reviewer → can BLOCK with CRITICAL issues
+5. security → can BLOCK unsafe implementations
+6. engineer → executes only approved tasks
+7. optimizer → lowest priority (post-MVP only)
+
+Rules:
+
+* Inactive agents = zero authority
+* Agents cannot override higher layer decisions
+* If conflict → follow hierarchy strictly
+
+---
+
+## EXECUTION RULES
+
+* Work ONLY on STATE.md → Current Focus
+* Do NOT expand scope
+* Do NOT rebuild completed components
+* Do NOT redesign unless required
+* Stop after task completion
+
+---
+
+## AGENT ACTIVATION
+
+Auto-select based on task:
+
+* Planning → planner
+* Building → engineer + domain agents
+* Validation → reviewer (+ security if needed)
+* Bug → debugger
+* Optimization → optimizer (post-MVP only)
+
+---
+
+## OUTPUT STANDARD
+
+* Direct, actionable
+* Minimal explanation
+* Code-first when applicable
+* No fluff
+
+---
+
+## SESSION END (MANDATORY)
+
+After task completion:
+
+* Update STATE.md:
+  * move task → Completed
+  * set next Current Focus
+* If major learning → update MEMORY.md (optional)
+* STOP
+
+---
+
+## 10 CORE AGENTS
+
+| Agent | Role | When Active |
+|-------|------|------------|
+| planner | Break tasks into sequence | New feature, unclear focus |
+| architect | System design, tech decisions | Design phase, new modules |
+| engineer | Code implementation | Building features |
+| reviewer | Quality gates, logic checks | After code completion |
+| debugger | Bug root cause, fix verification | When bugs reported |
+| optimizer | Performance tuning | Post-MVP only |
+| security | Auth, validation, data protection | Security review, unsafe code |
+| database | Schema, migrations, queries | Data layer tasks |
+| backend | Business logic, API routes | Backend tasks |
+| devops | Docker, deployment, infrastructure | Deployment phase |
 
 ---
 
